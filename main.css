@@ -1,0 +1,57 @@
+html, body{
+	margin:0;
+	padding:0;	
+}
+
+ul{
+	margin:0;
+	padding:0;
+}
+
+.container{
+    width:80%;
+    margin:0 auto;
+}
+
+.input{
+    width:98%;
+    padding:10px;
+    border:0;
+    font-size:18px;
+    outline:none;
+}
+
+.row{
+	list-style-type:none;
+	padding:10px;
+	overflow:hidden;
+}
+
+.row.odd{
+    background:#ddd;   
+}
+
+.row .text{
+	float:left;	
+}
+
+.row .amount{
+	float:right;	
+}
+
+.total-row{
+	overflow:hidden;
+	border-top:1px solid black;
+    position:fixed;
+    bottom:0;
+    box-sizing: border-box;width:80%;
+}
+
+.total-label{
+	font-size:14px;
+	float:left;	
+}
+
+.total-amount{
+	float:right;	
+}
