@@ -1,17 +1,3 @@
-(function(window, $){
-$(document).ready(function(){
-    /*$('#form').on('submit', function(){
-        var amount = $('#input').val().replace(/.*(\D)(\d+)\D*$/g, '$2');
-        
-        console.log(amount);
-        
-        
-        return false;
-    });*/
-    
-});
-}(this, jQuery));
-
 var cumulusApp = angular.module('cumulusApp', []);
 
 cumulusApp.controller('calculateLines', function($scope){
@@ -30,10 +16,8 @@ cumulusApp.controller('calculateLines', function($scope){
 				};
 			
 			$scope.lines.unshift(line);
-
-			$scope.numericTotal += amount;
-			
-			$scope.total = displayTotal();
+            
+            $scope.index = 0;
 			
 			this.input = '';
 		}
@@ -90,45 +74,43 @@ cumulusApp.controller('calculateLines', function($scope){
     
     $scope.onBlur = function(e){
          var index = $(e.target).parent('li').attr('id'),
-             value = parseFloat($(e.target).text()),
-             original = $scope.lines[index].amount;
-        
-        if(isNaN(value)){
-            value = 0;
-            //find a way to use this with angular to update total
+             value = parseFloat($(e.target).text()) || 0;
+            
+            //doing this doesn't rerender the template :(
+            //do you know how to rerender?
             $scope.lines[index].amount = value;
             //gotta do it by hand
-            $(e.target).text(value);      
-        }
-        
-        $scope.numericTotal += - original + value;
-        
-        $scope.total = displayTotal();
-
+            $(e.target).text(value);
     };
     
     $scope.modifyAmount = function(e){
         var index = $(e.target).parent('li').attr('id'),
-            original = $scope.lines[index].amount,
-            value = parseFloat($(e.target).text());
+            value = parseFloat($(e.target).text()) || 0;
+        
+        $scope.index = index;
 
-        if(isNaN(value)){
-            value = 0;
-        }
-        
-        $scope.numericTotal += - original + value;
-        
-        $scope.total = displayTotal();
         $scope.lines[index].amount = value;
         
     };
     
-    //use this to monitor total
+    //this monitors total it's better than suming all lines at every change
     $scope.$watch(
-  // This is the listener function
-    function() { return $scope.lines; },
-    function(modified, original){
-        console.log(arguments);
+        'lines',
+        function(modified, original){
+            if(modified !== original){
+                if(angular.isDefined(modified[$scope.index])){
+                    if(modified.length > original.length){
+                        //new line has been added
+                        $scope.numericTotal += modified[$scope.index].amount;
+                    }else{
+                        //line has been modified
+                        $scope.numericTotal += - original[$scope.index].amount + modified[$scope.index].amount;
+                        //need to implement delete
+                    }
+                    
+                    $scope.total = displayTotal();
+                }            
+            }            
         },
         true
     );
