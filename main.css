@@ -33,10 +33,17 @@ ul{
 
 .row .text{
 	float:left;	
+    cursor : text;
+    outline:none;
+    min-width:50px;
 }
 
 .row .amount{
-	float:right;	
+	float:right;
+    min-width:50px;
+    text-align: right;
+    cursor : text;
+    outline:none;
 }
 
 .total-row{

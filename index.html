@@ -9,8 +9,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
         <script src="jquery-1.11.0.min.js"></script>
         <script src="main.js"></script>
-        <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
     </head>
     <body ng-controller="calculateLines">
         <div class="container">
@@ -19,8 +17,8 @@
 	        </form>
 	        <ul class="rows">
 	        	<li id="{{$index}}" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="line in lines" class="row">
-	        		<span ng-focus="modifyText($event)" contenteditable="true" ng-click="modifyText($event)" class="text">{{line.text}}</span>
-	        		<span ng-focus="initChange($event)" ng-keydown="catchReturn($event)" ng-keyup="modifyAmount($event)" contenteditable="true" class="amount">{{line.amount}}</span>
+	        		<span ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
+	        		<span ng-blur="onBlur($event)" ng-keydown="filterKeys($event)" ng-keyup="modifyAmount($event)" contenteditable="true" class="amount">{{line.amount}}</span>
 	        	</li>
 	        	<li class="total-row row">
 	        		<span class="total-label">Total</span>
