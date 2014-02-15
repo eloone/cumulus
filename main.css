@@ -25,6 +25,8 @@ ul{
 	list-style-type:none;
 	padding:10px;
 	overflow:hidden;
+    position:relative;
+    padding-right:30px;
 }
 
 .row.odd{
@@ -36,6 +38,7 @@ ul{
     cursor : text;
     outline:none;
     min-width:50px;
+    max-width:90%;
 }
 
 .row .amount{
@@ -61,4 +64,21 @@ ul{
 
 .total-amount{
 	float:right;	
+}
+
+.delete{
+    color:red;
+    font-size:36px;
+    position:absolute;
+    right:0px;
+    top:-2px;
+    cursor:pointer;
+    background:white;
+    padding:0 3px 5px 5px;
+    display:none;
+    
+}
+
+.row:hover .delete{
+    display:block;
 }

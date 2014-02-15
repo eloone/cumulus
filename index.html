@@ -17,8 +17,9 @@
 	        </form>
 	        <ul class="rows">
 	        	<li id="{{$index}}" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="line in lines" class="row">
-	        		<span ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
-	        		<span ng-blur="onBlur($event)" ng-keydown="filterKeys($event)" ng-keyup="modifyAmount($event)" contenteditable="true" class="amount">{{line.amount}}</span>
+	        		<span ng-blur="test($event, $index)" ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
+	        		<span ng-blur="onBlur($event, $index)" ng-keydown="filterKeys($event)" ng-keyup="modifyAmount($event, $index)" contenteditable="true" class="amount">{{line.amount}}</span>
+                                                                                                                                                        <span title="delete" class="delete" ng-click="delete($event, $index)">-</span>
 	        	</li>
 	        	<li class="total-row row">
 	        		<span class="total-label">Total</span>

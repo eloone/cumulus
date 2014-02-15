@@ -72,20 +72,23 @@ cumulusApp.controller('calculateLines', function($scope){
         }
     };
     
-    $scope.onBlur = function(e){
-         var index = $(e.target).parent('li').attr('id'),
-             value = parseFloat($(e.target).text()) || 0;
-            
-            //doing this doesn't rerender the template :(
-            //do you know how to rerender?
-            $scope.lines[index].amount = value;
-            //gotta do it by hand
-            $(e.target).text(value);
+    $scope.test = function(e, index){
+      console.log(localStorage);
+        localStorage.setItem('test', 1);
     };
     
-    $scope.modifyAmount = function(e){
-        var index = $(e.target).parent('li').attr('id'),
-            value = parseFloat($(e.target).text()) || 0;
+    $scope.onBlur = function(e, index){
+        var  value = parseFloat($(e.target).text()) || 0;
+        
+        //doing this doesn't rerender the template :(
+        //do you know how to rerender?
+        $scope.lines[index].amount = value;
+        //gotta do it by hand
+        $(e.target).text(value);
+    };
+    
+    $scope.modifyAmount = function(e, index){
+        var  value = parseFloat($(e.target).text()) || 0;
         
         $scope.index = index;
 
@@ -93,23 +96,28 @@ cumulusApp.controller('calculateLines', function($scope){
         
     };
     
+    $scope.delete = function(e, index){
+        $scope.lines.splice(index, 1);
+    };
+    
     //this monitors total it's better than suming all lines at every change
     $scope.$watch(
         'lines',
         function(modified, original){
             if(modified !== original){
-                if(angular.isDefined(modified[$scope.index])){
-                    if(modified.length > original.length){
-                        //new line has been added
-                        $scope.numericTotal += modified[$scope.index].amount;
-                    }else{
-                        //line has been modified
-                        $scope.numericTotal += - original[$scope.index].amount + modified[$scope.index].amount;
-                        //need to implement delete
-                    }
-                    
-                    $scope.total = displayTotal();
-                }            
+                if(modified.length > original.length){
+                    //new line has been added
+                    $scope.numericTotal += modified[$scope.index].amount;
+                }else if(modified.length == original.length){
+                    //line has been modified
+                    $scope.numericTotal += - original[$scope.index].amount + modified[$scope.index].amount;
+                }
+                else{
+                    //line has been deleted
+                    $scope.numericTotal -= original[$scope.index].amount;
+                }
+         
+                $scope.total = displayTotal();
             }            
         },
         true
