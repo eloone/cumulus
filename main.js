@@ -1,9 +1,17 @@
 var cumulusApp = angular.module('cumulusApp', []);
 
 cumulusApp.controller('calculateLines', function($scope){
+    var lines = [];
+
+    //localStorage.clear();
+    if(localStorage){
+        lines = JSON.parse(localStorage.getItem('lines')) || [];
+    }
+
     $scope.numericTotal = 0;
-	$scope.total = displayTotal();
-	
+	$scope.total = displayTotal();    	
+	$scope.lines = lines;
+
 	$scope.submitInput = function(){	
 		var matches = /(.*[^\.\d,])((\d+?[\.,]?)?\d+)\D*$/g.exec(this.input);
 
@@ -20,6 +28,7 @@ cumulusApp.controller('calculateLines', function($scope){
             $scope.index = 0;
 			
 			this.input = '';
+            
 		}
 	
 		return false;
@@ -29,39 +38,18 @@ cumulusApp.controller('calculateLines', function($scope){
         return $scope.numericTotal.toFixed(2);
     }
     
-    $scope.keyStack = [];
-    
     $scope.filterKeys = function(e){
-
         //left/right/backspace
-        var allowed = [39, 37, 8],
-            //ctrl/cmd
-            combined = [91, 17];
+        var allowed = [39, 37, 8];
         
-        if(allowed.indexOf(e.keyCode) > -1){
+        if(allowed.indexOf(e.keyCode) > -1 || (e.ctrlKey || e.metaKey)){
             return true;
         }
         
-        if(combined.indexOf(e.keyCode) > -1){
-            //we have to put keycode on a stack to remember it in ctrl+A case
-            $scope.keyStack.push(e.keyCode);
-            return true;
-        }
-        
-        //enter
-        if(e.keyCode == 13){
+        //enter or non digit
+        if(e.keyCode == 13 || (e.keyCode < 48 || e.keyCode > 57)){
             e.preventDefault();
         }
-        
-        //non digit
-        if(e.keyCode < 48 || e.keyCode > 57){
-            if($scope.keyStack.join(' ').match(/91|17/g)){
-                $scope.keyStack.shift();
-                return true;
-            }else{
-                e.preventDefault();
-            }            
-        } 
        
     };
     
@@ -72,11 +60,6 @@ cumulusApp.controller('calculateLines', function($scope){
         }
     };
     
-    $scope.test = function(e, index){
-      console.log(localStorage);
-        localStorage.setItem('test', 1);
-    };
-    
     $scope.onBlur = function(e, index){
         var  value = parseFloat($(e.target).text()) || 0;
         
@@ -85,19 +68,58 @@ cumulusApp.controller('calculateLines', function($scope){
         $scope.lines[index].amount = value;
         //gotta do it by hand
         $(e.target).text(value);
+        
+        $scope.$emit('save');
     };
     
     $scope.modifyAmount = function(e, index){
         var  value = parseFloat($(e.target).text()) || 0;
-        
+
         $scope.index = index;
 
         $scope.lines[index].amount = value;
         
     };
     
+    $scope.modifyText = function(e, index){
+        var  value = $(e.target).text();
+         
+        $scope.index = index;
+
+        $scope.lines[index].text = value;       
+    };
+
+    $scope.$on('typing', function(thisEvent, domEvent){
+        if(!localStorage){
+            return;
+        }
+        
+        $(domEvent.currentTarget).addClass('unsaved');
+
+        if(domEvent.ctrlKey || domEvent.metaKey){
+            if(domEvent.keyCode == 83){
+                //prevents ctrl+s saving
+                domEvent.preventDefault();
+                
+                $scope.$emit('save');
+            }
+        }
+        
+    });
+    
+     $scope.$on('save', function(thisEvent, domEvent){  
+        if(!localStorage){
+            return;
+        }
+
+        localStorage.setItem('lines', JSON.stringify($scope.lines));
+         
+        $('.unsaved').removeClass('unsaved');
+    });
+    
     $scope.delete = function(e, index){
         $scope.lines.splice(index, 1);
+        $scope.index = index;
     };
     
     //this monitors total it's better than suming all lines at every change
@@ -108,6 +130,7 @@ cumulusApp.controller('calculateLines', function($scope){
                 if(modified.length > original.length){
                     //new line has been added
                     $scope.numericTotal += modified[$scope.index].amount;
+                    $scope.$emit('save');
                 }else if(modified.length == original.length){
                     //line has been modified
                     $scope.numericTotal += - original[$scope.index].amount + modified[$scope.index].amount;
@@ -115,13 +138,19 @@ cumulusApp.controller('calculateLines', function($scope){
                 else{
                     //line has been deleted
                     $scope.numericTotal -= original[$scope.index].amount;
+                    $scope.$emit('save');
                 }
-         
-                $scope.total = displayTotal();
-            }            
+  
+            }else{
+                //at page load
+                for(var i = 0; i < $scope.lines.length; i++){
+                    $scope.numericTotal += $scope.lines[i].amount;
+                }
+            }
+            
+            $scope.total = displayTotal();
         },
         true
     );
-	
-	$scope.lines = [];
+
 });

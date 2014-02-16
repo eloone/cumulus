@@ -16,8 +16,8 @@
 	            <input ng-model="input" id="input" class="input" type="text" placeholder="Type your text followed by the amount here"/>
 	        </form>
 	        <ul class="rows">
-	        	<li id="{{$index}}" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="line in lines" class="row">
-	        		<span ng-blur="test($event, $index)" ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
+	        	<li ng-keydown="$emit('typing', $event)" id="_{{$index}}" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="line in lines track by $index" class="row">
+	        		<span ng-keyup="modifyText($event, $index)"  ng-blur="$emit('save', $event)" ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
 	        		<span ng-blur="onBlur($event, $index)" ng-keydown="filterKeys($event)" ng-keyup="modifyAmount($event, $index)" contenteditable="true" class="amount">{{line.amount}}</span>
                                                                                                                                                         <span title="delete" class="delete" ng-click="delete($event, $index)">-</span>
 	        	</li>

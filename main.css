@@ -33,6 +33,10 @@ ul{
     background:#ddd;   
 }
 
+.row.unsaved{
+    background:rgb(255, 238, 219);        
+}
+
 .row .text{
 	float:left;	
     cursor : text;
