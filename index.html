@@ -4,14 +4,33 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Cumulus</title>
-        <meta name="description" content="An interactive getting started guide for Brackets.">
+        <meta name="description" content="A calculating surface.">
+        <link href='http://fonts.googleapis.com/css?family=Sanchez' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
         <script src="jquery-1.11.0.min.js"></script>
         <script src="main.js"></script>
     </head>
-    <body ng-controller="calculateLines">
-        <div class="container">
+    <body>
+    	<header>
+    		<div class="inline home">    			
+    			<svg style="background:rgb(3, 133, 165);" class="home-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" > 
+    			  <a xlink:href="#">  				
+    				<path id="test" transform="scale(2 1)" d="M0,40 L35,40 Q45,40 52,15 Q60,-10 75,0 L75,0 0,0 Z" style="stroke: none;"/>
+    				<text x="10" y="25">Cumulus</text>
+    			  </a>
+				</svg>
+    		</div>
+    		<div class="center inline">
+	    		<nav class="app-menu">
+	    			<span class="app-menu-entry">Read from file</span>
+	    			<span class="app-menu-entry">Read from text</span>
+	    			<span class="app-menu-entry">Delete all</span>
+	    		</nav>
+    		</div>
+    		<div class="inline saved-status">Saved</div>
+    	</header>
+        <div  ng-controller="calculateLines" class="container">
 	        <form ng-submit="submitInput()" "id="form">
 	            <input ng-model="input" id="input" class="input" type="text" placeholder="Type your text followed by the amount here"/>
 	        </form>
