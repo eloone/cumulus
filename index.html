@@ -14,9 +14,9 @@
     <body>
     	<header>
     		<div class="inline home">    			
-    			<svg style="background:rgb(3, 133, 165);" class="home-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" > 
+    			<svg class="home-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" > 
     			  <a xlink:href="#">  				
-    				<path id="test" transform="scale(2 1)" d="M0,40 L35,40 Q45,40 52,15 Q60,-10 75,0 L75,0 0,0 Z" style="stroke: none;"/>
+    				<path transform="scale(2 1)" d="M0,40 L35,40 Q45,40 52,15 Q60,-10 75,0 L75,0 0,0 Z" style="stroke: none;"/>
     				<text x="10" y="25">Cumulus</text>
     			  </a>
 				</svg>
@@ -28,23 +28,35 @@
 	    			<span class="app-menu-entry">Delete all</span>
 	    		</nav>
     		</div>
-    		<div class="inline saved-status">Saved</div>
+    		<div class="inline saved-status">
+    			<svg class="saved-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" >   				
+    				<path transform="translate(-50 40) scale(2 -1)" d="M0,40 L35,40 Q45,40 52,15 Q60,-10 75,0 L75,0 0,0 Z" style="stroke: none;"/>
+    				<text x="80" y="25">Saved</text>
+				</svg>
+    		</div>
     	</header>
         <div  ng-controller="calculateLines" class="container">
-	        <form ng-submit="submitInput()" "id="form">
+	        <form ng-submit="submitInput()" id="form">
 	            <input ng-model="input" id="input" class="input" type="text" placeholder="Type your text followed by the amount here"/>
 	        </form>
 	        <ul class="rows">
 	        	<li ng-keydown="$emit('typing', $event)" id="_{{$index}}" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="line in lines track by $index" class="row">
-	        		<span ng-keyup="modifyText($event, $index)"  ng-blur="$emit('save', $event)" ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
-	        		<span ng-blur="onBlur($event, $index)" ng-keydown="filterKeys($event)" ng-keyup="modifyAmount($event, $index)" contenteditable="true" class="amount">{{line.amount}}</span>
-                                                                                                                                                        <span title="delete" class="delete" ng-click="delete($event, $index)">-</span>
+	        		<div class="inner-line">
+		        		<span ng-keyup="modifyText($event, $index)"  ng-blur="$emit('save', $event)" ng-keydown="filterReturn($event)" contenteditable="true" class="text">{{line.text}}</span>
+		        		<span ng-blur="onBlur($event, $index)" ng-keydown="filterKeys($event)" ng-keyup="modifyAmount($event, $index)" contenteditable="true" class="amount">{{line.amount}}</span>
+		        		<span title="delete" class="delete" ng-click="delete($event, $index)"></span>
+	        		</div>
 	        	</li>
 	        	<li class="total-row row">
-	        		<span class="total-label">Total</span>
-	        		<span class="total-amount">{{total}}</span>
+	        		<div class="inner-line">
+		        		<span class="total-label">Total</span>
+		        		<span class="total-amount">{{total}}</span>
+	        		</div>
 	        	</li>
 	        </ul>
         </div>
+        <footer>
+        	<a href="">by eloone</a>
+        </footer>
     </body>
 </html>
