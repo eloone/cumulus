@@ -9,7 +9,7 @@ Cumulus is a calculating surface.
 
 This is a UI exercise to see how a calculating surface would work and how to work on list items. It plays with the modern ways we have to edit and capture data. Usually it is a given that you should edit an online interface like that :
 
-![Alt text](https://github.com/eloone/cumulus/blob/master/illustration.png)
+![Alt text](https://github.com/eloone/cumulus/blob/master/illustration.png?raw=true)
 
 However would'nt it be better if you could edit your content on a flat interface in a desktop fashion? Why should we ever need the form interface? Cumulus aims at exploring this UI problem.
 
