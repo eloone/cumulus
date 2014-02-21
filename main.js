@@ -1,6 +1,20 @@
 var cumulusApp = angular.module('cumulusApp', []);
 
-cumulusApp.controller('calculateLines', function($scope){
+cumulusApp.controller('headerCtrl', function($scope){
+     $scope.$on('istyping', function(thisEvent){
+        $('#saved-svg').attr('class', 'saved-graphic typing');
+        //added to fix a rendreing pb on chrome to render svg with a class
+        //the style of the svg without the class is still visible
+        $('.saved-status').addClass('typing');
+     });
+
+     $scope.$on('issaved', function(thisEvent){
+        $('#saved-svg').attr('class', 'saved-graphic');
+        $('.saved-status').removeClass('typing');
+     });
+});
+
+cumulusApp.controller('linesCtrl', function($scope, $rootScope){
     var lines = [];
 
     //localStorage.clear();
@@ -93,6 +107,8 @@ cumulusApp.controller('calculateLines', function($scope){
         if(!localStorage){
             return;
         }
+
+        $rootScope.$broadcast('istyping');
         
         $(domEvent.currentTarget).addClass('unsaved');
 
@@ -112,6 +128,9 @@ cumulusApp.controller('calculateLines', function($scope){
             return;
         }
 
+        $rootScope.$broadcast('issaved');
+
+        //i don't trust saving the total in db..
         localStorage.setItem('lines', JSON.stringify($scope.lines));
          
         $('.unsaved').removeClass('unsaved');

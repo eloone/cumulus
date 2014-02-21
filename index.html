@@ -12,30 +12,32 @@
         <script src="main.js"></script>
     </head>
     <body>
-    	<header>
-    		<div class="inline home">    			
+    	<header ng-controller="headerCtrl" >
+    		<!--div class="inline home">    			
     			<svg class="home-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" > 
     			  <a xlink:href="#">  				
     				<path transform="scale(2 1)" d="M0,40 L35,40 Q45,40 52,15 Q60,-10 75,0 L75,0 0,0 Z" style="stroke: none;"/>
     				<text x="10" y="25">Cumulus</text>
     			  </a>
 				</svg>
-    		</div>
+    		</div-->
     		<div class="center inline">
-	    		<nav class="app-menu">
+	    		<!--nav class="app-menu">
 	    			<span class="app-menu-entry">Read from file</span>
 	    			<span class="app-menu-entry">Read from text</span>
 	    			<span class="app-menu-entry">Delete all</span>
-	    		</nav>
+	    		</nav-->
+                Cumulus
     		</div>
     		<div class="inline saved-status">
-    			<svg class="saved-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" >   				
+    			<svg id="saved-svg" class="saved-graphic" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">   				
     				<path transform="translate(-50 40) scale(2 -1)" d="M0,40 L35,40 Q45,40 52,15 Q60,-10 75,0 L75,0 0,0 Z" style="stroke: none;"/>
-    				<text x="80" y="25">Saved</text>
+    				<text class="status" x="50%" y="25">Saved</text>
+                    <text class="dots" x="65%" y="25">...</text>
 				</svg>
     		</div>
     	</header>
-        <div  ng-controller="calculateLines" class="container">
+        <div  ng-controller="linesCtrl" class="container">
 	        <form ng-submit="submitInput()" id="form">
 	            <input ng-model="input" id="input" class="input" type="text" placeholder="Type your text followed by the amount here"/>
 	        </form>
@@ -56,7 +58,7 @@
 	        </ul>
         </div>
         <footer>
-        	<a href="">by eloone</a>
+        	<a target="_blank" href="https://github.com/eloone/cumulus">cumulus 2014 | by eloone</a>
         </footer>
     </body>
 </html>

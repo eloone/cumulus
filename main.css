@@ -49,23 +49,44 @@ header .saved-status{
 	/*fill:rgb(147, 212, 228);*/	
 }
 
+.saved-status.typing{
+	background:rgb(255, 238, 219);
+}
+
 .saved-graphic{
 	background:rgb(225, 242, 247);
+	width:100%;
+	display:block;
 }
 
 .saved-graphic path{
 	fill:rgb(3, 133, 165);
 }
-
-.saved-graphic text{
+.saved-graphic.typing .status{
+	display:none;
+}
+.saved-graphic .status{
 	fill:rgb(3, 133, 165);	
+}
+.saved-graphic.typing{
+	background:rgb(255, 238, 219);
+}
+
+.saved-graphic.typing .dots{
+	display:block;
+}
+.saved-graphic .dots{
+	display:none;
+	font-size:36px;
+	fill:rgb(255, 82, 0);	
 }
 
 header .center{
-	width:80%;
+	width:90%;
 	background:rgb(3, 133, 165);
 	padding:10px 0;
 	height:20px;
+	color:rgb(225, 242, 247);
 }
 
 header .app-menu{
@@ -179,18 +200,18 @@ header .app-menu{
 
 footer{
 	background:rgb(3, 133, 165);
-	text-align:right;
 	position:fixed;
 	width:100%;
 	bottom:0;
 	height:20px;
 	padding:3px;
 	font-size:11px;
+	text-align:center;
 }
 
 footer a{
 	text-decoration:none;
-	color:rgb(225, 242, 247);
+	color:rgb(225, 242, 247);  
 	margin-right:10px;
 	padding-top:3px;
 	display:inline-block;
