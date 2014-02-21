@@ -3,7 +3,7 @@ var cumulusApp = angular.module('cumulusApp', []);
 cumulusApp.controller('headerCtrl', function($scope){
      $scope.$on('istyping', function(thisEvent){
         $('#saved-svg').attr('class', 'saved-graphic typing');
-        //added to fix a rendreing pb on chrome to render svg with a class
+        //added to fix a rendering pb on chrome to render svg with a class
         //the style of the svg without the class is still visible
         $('.saved-status').addClass('typing');
      });
